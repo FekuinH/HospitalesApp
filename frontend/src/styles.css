@@ -1,0 +1,21 @@
+#themecolors a {
+    cursor: pointer;
+}
+
+.img-50{
+    width: 50px;
+}
+
+.w70{
+    width: 70px;
+}
+
+.btn-action{
+    display:inline-flex;
+    
+}
+
+
+.w150{
+    max-width: 250px;
+}

@@ -1,0 +1,64 @@
+<div class="row animated fadeIn">
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Perfi del usuario</h4>
+                <h6 class="card-subtitle">nombre usuario</h6>
+                <form class="form p-t-20" #profileForm="ngForm"  (ngSubmit)="guardar(profileForm.value)">
+                   
+                    <div class="form-group">
+
+                        <label for="exampleInputuname">Nombre del usuario</label>
+                       
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input [ngModel]="usuario.nombre" name="nombre" type="text" class="form-control" id="exampleInputuname" placeholder="Username" required minlength="3" #nombre="ngModel">
+                        </div>
+
+                        <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.touched || nombre.dirty)">
+                            <div *ngIf="nombre.errors.required">El nombre es obligatorio</div>
+                            <div *ngIf="nombre.errors.minlength">El nombre debe tener al menos 3 letras</div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="exampleInputEmail1">Email del usuario</label>
+                        
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-email"></i></div>
+                            <input [disabled]="usuario.google" [ngModel]="usuario.email" name="email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" required #email="ngModel" email>
+                        </div>
+
+                        <div class="alert alert-danger" *ngIf="email.invalid && (email.touched || email.dirty)">
+                            <div *ngIf="email.errors.required">El email es obligatorio</div>
+                            <div *ngIf="email.errors.email">El email tiene un formato inválido</div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success waves-effect waves-light m-r-10" [disabled]=!profileForm.form.valid><i
+                            class="fa fa-save"></i> Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4 class="card-title">Fotografia del usuario</h4>
+                
+                <img *ngIf="!tempImg" [src]="usuario.img | imagen" class="w150" alt="">
+                <img *ngIf="tempImg" [src]="tempImg" class="w150" alt="">
+
+                <input (change)="selectImg($event.target.files[0])" type="file">
+                <br><br>    
+                <button (click)="changeImg()" [disabled]="!selectImage" type="submit" class="btn btn-success btn-block waves-effect waves-light m-r-10"><i
+                    class="fa fa-save"></i> Actualizar foto</button>
+            </div>
+        </div>
+    </div>
+</div>

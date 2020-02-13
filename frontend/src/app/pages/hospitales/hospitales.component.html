@@ -1,0 +1,78 @@
+<div class="row animated fadeIn">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #input type="text" class="form-control" placeholder="Buscar hospital"
+                    (keyup)="findHospitals(input.value)">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="loading">
+    <div class="col-12">
+        <div class="alert alert-warning text-center">
+            <strong>Loading</strong>
+            <br>
+            <i class="fa fa-refresh fa-spin fa-2x"></i>
+            <br>
+            <span>Waiting please</span>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn" *ngIf="!loading">
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Hospitales registrados (<span>{{totalRegistros}}</span>) </h3>
+
+                <div class="text-right">
+                    <button class="btn btn-rounded btn-primary col-sm-12 col-md-4 col-lg-2" (click)="createHospital()">+ Crear nuevo</button>
+                </div>
+
+                <table class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        
+
+                        <tbody>
+                            <tr *ngFor="let hospital of hospitalesList">
+                                <td class="w70" *ngIf="hospital">
+                                    <img [src]="hospital.img | imagen:'hospitales'" class="img-50 img-circle"
+                                        (click)="openModal(hospital._id)" style="cursor: pointer; max-width: 50px;">
+                                </td>
+                                <td><input [(ngModel)]="hospital.nombre" type="text" class="form-control col-12" placeholder="{{hospital.nombre}}"></td>
+
+                                <td>
+                                    <div class="btn-action">
+                                        <button class="btn btn-primary" (click)="saveChanges(hospital)">
+                                            <i class="fa fa-save"></i>
+                                        </button>
+                                        <button class="btn btn-danger ml-1" (click)="deleteHospital(hospital._id)">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </table>
+
+                <button (click)="changePage(-5)" class="btn btn-secondary">Anteriores</button>
+                <button (click)="changePage(5)" class="btn btn-secondary ml-1">Siguiente</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-upload-file-modal *ngIf="modalService.isOpen"> </app-upload-file-modal>
