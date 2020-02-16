@@ -1,0 +1,68 @@
+<div class="row animated fadeIn">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <h3 class="box-title m-b-0">Nuevo médico</h3>
+
+            <div class="row">
+                <div class="col-sm-12 col-xs-12">
+                    <form #formMedic="ngForm">
+                        <div class="form-group">
+                            <label>Nombre del Médico</label>
+                            <input [(ngModel)]="medico.nombre" name="nombre" type="text" class="form-control"
+                                required #nombre="ngModel">
+                            <div *ngIf="nombre.invalid && (nombre.touched || nombre.dirty)" class="alert alert-danger">
+                                El nombre es obligatorio</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Hospital</label>
+                            <select (change)="cambioHospital($event.target.value)" [(ngModel)]="medico.hospital"
+                                name="hospital" class="form-control" required #hospital="ngModel">
+                                <option [ngValue]="undefined"> ---Seleccionar region--- </option>
+                                <option *ngFor="let hospital of hospitales" [value]="hospital._id">
+                                    {{hospital.nombre}}
+                                </option>
+                                <div *ngIf="hospital.invalid && (hospital.touched || hospital.dirty)"
+                                    class="alert alert-danger">Debe seleccionar un hospital</div>
+                            </select>
+                        </div>
+
+                        <a [routerLink]="['/medicos']" class="btn btn-inverse waves-effect waves-light m-r-10">Volver
+                            atrás</a>
+
+                        <button *ngIf="!medico._id else elseBlock" type="submit" (click)="createMedic(formMedic)"
+                            class="btn btn-success waves-effect waves-light m-r-10" [disabled]=formMedic.form.invalid><i
+                                class="fa fa-save"></i> Guardar</button>
+
+                        <ng-template #elseBlock>
+                            <button (click)="actualizar(medico)" class="btn btn-success waves-effect waves-light"
+                                [disabled]=formMedic.form.invalid><i class="fa fa-save"></i> Actualizar</button>
+
+                        </ng-template>
+
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="card card-body">
+            <h4 class="box-title m-b-0">Hospital</h4>
+
+            <img [src]="hospitalSeleccionado.img | imagen:'hospitales'" alt="" class="w150 h150">
+
+
+        </div>
+    </div>
+
+    <div class="col-md-3" *ngIf="medico._id">
+        <div class="card card-body">
+            <h4 class="box-title m-b-0">Fotografía</h4>
+            <img (click)="cambiarFoto()" [src]="medico.img | imagen:'medicos'" class="w150 h150 pointer">
+        </div>
+    </div>
+</div>
+
+<app-upload-file-modal *ngIf="modalService.isOpen"> </app-upload-file-modal>

@@ -1,0 +1,14 @@
+<h4>{{leyenda}}</h4>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <button class="btn btn-outline-primary" type="button" id="button-addon1"><i class="mdi mdi-minus"
+                (click)="cambiarValor(-5)"></i></button>
+    </div>
+    <input #txtPorcentaje type="number" class="form-control" placeholder="" aria-label="Example text with button addon"
+        aria-describedby="button-addon1" [(ngModel)]="porcentaje" min="1" max="100" (ngModelChange)="onChanges($event)">
+
+    <div class="input-group-prepend">
+        <button class="btn btn-outline-primary" type="button" id="button-addon1"><i class="mdi mdi-plus"
+                (click)="cambiarValor(+5)"></i></button>
+    </div>
+</div>
